@@ -13,6 +13,11 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     _notificationServices.requestNotificationPermission();
+    _notificationServices.getDeviceToken().then((value)  {
+      print(value);
+    });
+    _notificationServices.isTokenRefresh();
+    _notificationServices.firebaseInit();
     super.initState();
   }
   @override
