@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:label="notification_part"
         android:name="${applicationName}"
@@ -21,6 +25,8 @@
               />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

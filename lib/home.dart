@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
       print(value);
     });
     _notificationServices.isTokenRefresh();
-    _notificationServices.firebaseInit();
+    _notificationServices.firebaseInit(context);
     super.initState();
   }
   @override
