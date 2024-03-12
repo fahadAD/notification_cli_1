@@ -1,6 +1,6 @@
 
 import 'dart:math';
-
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -61,9 +61,15 @@ String? tokean=await _messaging.getToken();
 
     }
 
+if(Platform.isAndroid){
+  initLocalNotification(context, massage);
+  showNotification(massage);
 
-   initLocalNotification(context, massage);
-   showNotification(massage);
+}else{
+  showNotification(massage);
+}
+
+
    });
   }
 
@@ -83,6 +89,8 @@ String? tokean=await _messaging.getToken();
       initializationSetting,
       onDidReceiveNotificationResponse: (details) {
            print("fahad onDidReceiveNotificationResponse === $details ===");
+           handleMassage(context, message);
+
       },
       onDidReceiveBackgroundNotificationResponse: (details) {
         print("fahad onDidReceiveBackgroundNotificationResponse === $details ===");
@@ -143,7 +151,23 @@ Future<void> showNotification(RemoteMessage message)async {
 void handleMassage(BuildContext context,RemoteMessage message){
 
   if(message.data['type']=='massage'){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MSG_Screen(),));
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MSG_Screen(id: message.data['id'],),));
   }
 }
+
+///when app is kill
+
+Future<void> setupInterrectMassage(BuildContext context)async {
+RemoteMessage? _messaging=await FirebaseMessaging.instance.getInitialMessage();
+if(_messaging != null){
+  handleMassage(context, _messaging);
+}
+
+  ///when app is background
+FirebaseMessaging.onMessageOpenedApp.listen((event) {
+  handleMassage(context, event);
+});
+}
+
 }

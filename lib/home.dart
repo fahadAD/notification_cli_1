@@ -17,6 +17,7 @@ class _HomeState extends State<Home> {
       print(value);
     });
     _notificationServices.isTokenRefresh();
+    _notificationServices.setupInterrectMassage(context);
     _notificationServices.firebaseInit(context);
     super.initState();
   }
